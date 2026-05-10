@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Results · Hormona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="tracker.html">Track</a>
+        <a href="insights.html">Insights</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="history.html">History</a>
+        <button class="btn btn-ghost btn-sm" id="themeToggle">🌗</button>
+      </nav>
+      <button class="nav-toggle">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="greeting reveal">
+      <div>
+        <span class="eyebrow">Your AI report</span>
+        <h2 style="margin-top:.5rem;">Hormonal Health Results</h2>
+        <p class="muted">Based on your last 14 days of tracking.</p>
+      </div>
+      <div class="row">
+        <button class="btn btn-ghost" onclick="exportPDF('reportArea','hormona-report.pdf')">⬇ Download PDF</button>
+        <a href="tracker.html" class="btn btn-primary">+ New entry</a>
+      </div>
+    </div>
+
+    <div id="reportArea"></div>
+
+    <div class="disclaimer" style="margin-top:1.5rem;">
+      ⚕️ <strong>Disclaimer:</strong> Hormona's analysis is informational and not a medical diagnosis. Please consult a healthcare provider for clinical evaluation.
+    </div>
+  </main>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/insights.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderResults(document.getElementById("reportArea"));
+    });
+  </script>
+</body>
+</html>

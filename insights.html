@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Insights · Hormona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="tracker.html">Track</a>
+        <a href="insights.html">Insights</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="history.html">History</a>
+        <button class="btn btn-ghost btn-sm" id="themeToggle">🌗</button>
+      </nav>
+      <button class="nav-toggle">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="greeting reveal">
+      <div>
+        <span class="eyebrow">AI Insights</span>
+        <h2 style="margin-top:.5rem;">What your body is saying</h2>
+        <p class="muted">Weekly behavioral analysis & recurring patterns.</p>
+      </div>
+    </div>
+
+    <div class="grid reveal" style="grid-template-columns:1fr 1fr;gap:1.25rem;">
+      <div class="glass">
+        <div class="card-title"><span class="dot"></span> Weekly Report</div>
+        <div id="weeklyReport"></div>
+      </div>
+      <div class="glass">
+        <div class="card-title"><span class="dot"></span> Behavioral Observations</div>
+        <div id="observations"></div>
+      </div>
+    </div>
+
+    <div class="grid reveal" style="grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.25rem;">
+      <div class="glass"><div class="card-title"><span class="dot"></span> Weight Trend</div><div style="height:240px;"><canvas id="weightChart"></canvas></div></div>
+      <div class="glass"><div class="card-title"><span class="dot"></span> Stress Trend</div><div style="height:240px;"><canvas id="stressChart"></canvas></div></div>
+    </div>
+
+    <div class="glass reveal" style="margin-top:1.25rem;">
+      <div class="card-title"><span class="dot"></span> Hormonal Balance Score (last 14 days)</div>
+      <div style="height:260px;"><canvas id="balanceChart"></canvas></div>
+    </div>
+  </main>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const entries = loadEntries();
+      const a = analyzeHealth(entries);
+
+      // Weekly summary
+      const last7 = entries.slice(0,7);
+      const avgMood = last7.length ? (last7.reduce((s,e)=>s+(+e.mood||0),0)/last7.length).toFixed(1) : "—";
+      const avgSleep = last7.length ? (last7.reduce((s,e)=>s+(+e.sleep||0),0)/last7.length).toFixed(1) : "—";
+      const avgEnergy = last7.length ? (last7.reduce((s,e)=>s+(+e.energy||0),0)/last7.length).toFixed(1) : "—";
+
+      document.getElementById("weeklyReport").innerHTML = `
+        <p>${topInsight(a)}</p>
+        <ul style="padding-left:1.1rem;color:var(--text-soft);line-height:1.9;">
+          <li>Avg. mood: <strong>${avgMood}/10</strong></li>
+          <li>Avg. sleep: <strong>${avgSleep}h</strong></li>
+          <li>Avg. energy: <strong>${avgEnergy}/10</strong></li>
+          <li>Entries logged this week: <strong>${last7.length}</strong></li>
+        </ul>
+      `;
+
+      // Observations
+      const obs = [];
+      if (a.trends && a.trends.sleepAvg < 6.5) obs.push("Your energy levels consistently decrease on low-sleep days.");
+      if (a.trends && a.trends.prePeriodMoodDrop) obs.push("Sleep quality appears to impact your emotional balance.");
+      if (a.patterns.length) a.patterns.forEach(p => obs.push(p.text));
+      if (!obs.length) obs.push("Keep tracking — observations appear after ~7 days of data.");
+
+      document.getElementById("observations").innerHTML = obs.map(o => `
+        <div style="display:flex;gap:.6rem;padding:.55rem 0;border-bottom:1px dashed var(--border);">
+          <span>💡</span><span style="font-size:.92rem;color:var(--text-soft);">${o}</span>
+        </div>`).join("");
+
+      const labels = chartLabels(entries, 14);
+      lineChart("weightChart", labels, chartSeries(entries, "weight", 14), "Weight (kg)", "#ff6fae");
+      lineChart("stressChart", labels, chartSeries(entries, "stress", 14), "Stress", "#9b6bea");
+
+      // Balance per-day score (100 - symptom load)
+      const balance = entries.slice(0,14).reverse().map(e => {
+        const load = (Number(e.acne)||0)+(Number(e.bloating)||0)+(Number(e.cramps)||0)+(Number(e.stress)||0)+(Number(e.anxiety)||0);
+        return Math.max(10, 100 - load * 2);
+      });
+      barChart("balanceChart", labels, balance, "Hormonal balance");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard · Hormona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="tracker.html">Track</a>
+        <a href="insights.html">Insights</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="history.html">History</a>
+        <button class="btn btn-ghost btn-sm" id="themeToggle">🌗</button>
+      </nav>
+      <button class="nav-toggle">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="greeting reveal">
+      <div>
+        <span class="eyebrow">Today</span>
+        <h2 id="greet" style="margin-top:.5rem;">Good morning ✨</h2>
+        <p class="muted" id="todayDate"></p>
+      </div>
+      <div class="row">
+        <a class="btn btn-ghost" href="tracker.html">+ Log today</a>
+        <a class="btn btn-primary" href="results.html">View results →</a>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+
+      <!-- Hormonal balance ring -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Hormonal Balance</div>
+        <div style="display:flex;gap:1.5rem;align-items:center;margin-top:1rem;">
+          <div class="ring" id="balanceRing" style="--p:0"><span class="v">0</span></div>
+          <div>
+            <div class="muted">Overall score</div>
+            <h3 id="balanceLabel" style="font-family:var(--font-display);font-size:1.6rem;color:var(--purple-700);">—</h3>
+            <span class="badge" id="riskBadge">—</span>
+          </div>
+        </div>
+        <p class="muted" id="topInsight" style="margin-top:1rem;"></p>
+      </div>
+
+      <!-- Streak -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Daily Streak</div>
+        <h2 style="font-family:var(--font-display);font-size:3rem;margin:.5rem 0;color:var(--purple-700);"><span id="streak" data-count="0">0</span><small style="font-size:1rem;color:var(--text-muted);"> days</small></h2>
+        <p class="muted">Consistency unlocks deeper insights.</p>
+      </div>
+
+      <!-- Cycle phase -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Cycle Phase</div>
+        <h3 id="phaseName" style="font-family:var(--font-display);font-size:1.6rem;color:var(--purple-700);margin-top:.5rem;">—</h3>
+        <p class="muted" id="phaseDesc">—</p>
+      </div>
+
+      <!-- Sleep -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Sleep Quality</div>
+        <h3 style="font-family:var(--font-display);font-size:2rem;color:var(--purple-700);margin-top:.5rem;"><span id="avgSleep" data-count="0">0</span>h</h3>
+        <p class="muted">7-day average</p>
+      </div>
+
+      <!-- Mood -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Mood Balance</div>
+        <h3 style="font-family:var(--font-display);font-size:2rem;color:var(--purple-700);margin-top:.5rem;"><span id="avgMood" data-count="0">0</span>/10</h3>
+        <p class="muted">7-day average</p>
+      </div>
+
+      <!-- Patterns -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Active Patterns</div>
+        <div id="patternList" style="margin-top:.5rem;"></div>
+      </div>
+
+      <!-- Trend chart -->
+      <div class="glass reveal span-2">
+        <div class="card-title"><span class="dot"></span> Mood &amp; Energy Trend</div>
+        <div style="height:240px;margin-top:.5rem;"><canvas id="moodChart"></canvas></div>
+      </div>
+
+      <!-- Sleep chart -->
+      <div class="glass reveal">
+        <div class="card-title"><span class="dot"></span> Sleep Pattern</div>
+        <div style="height:240px;margin-top:.5rem;"><canvas id="sleepChart"></canvas></div>
+      </div>
+
+      <!-- Symptom freq -->
+      <div class="glass reveal span-3">
+        <div class="card-title"><span class="dot"></span> Symptom Activity (last 14 days)</div>
+        <div style="height:260px;margin-top:.5rem;"><canvas id="symptomChart"></canvas></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Greeting
+      const h = new Date().getHours();
+      const g = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+      const s = loadSettings();
+      document.getElementById("greet").textContent = `${g}${s.name ? ", " + s.name : ""} ✨`;
+      document.getElementById("todayDate").textContent = new Date().toLocaleDateString(undefined, { weekday:"long", month:"long", day:"numeric" });
+
+      const entries = loadEntries();
+      const a = analyzeHealth(entries);
+
+      // Balance ring
+      setRing(document.getElementById("balanceRing"), a.hormonalScore);
+      document.getElementById("balanceLabel").textContent = a.hormonalScore >= 70 ? "Balanced" : a.hormonalScore >= 45 ? "Watchful" : "Needs Care";
+      const rb = document.getElementById("riskBadge");
+      rb.textContent = (a.riskLevel || "low").toUpperCase() + " RISK";
+      rb.className = "badge " + (a.riskLevel === "high" ? "high" : a.riskLevel === "moderate" ? "mod" : "low");
+      document.getElementById("topInsight").textContent = topInsight(a);
+
+      // Streak
+      const streak = bumpStreak() || 0;
+      const sEl = document.getElementById("streak"); sEl.dataset.count = streak; animateCounter(sEl, streak);
+
+      // Cycle phase
+      const pred = predictCycle(entries);
+      if (pred) {
+        const today = new Date();
+        const last = new Date(pred.lastStart);
+        const day = Math.floor((today - last) / (1000*60*60*24));
+        let phase = "Follicular", desc = "Energy rising — great time for new habits.";
+        if (day < 0) { phase = "—"; desc = "Log your last period to predict phase."; }
+        else if (day < pred.periodLen) { phase = "Menstrual"; desc = "Rest, hydrate and nourish."; }
+        else if (day < 13) { phase = "Follicular"; desc = "Energy rising — great time for new habits."; }
+        else if (day < 16) { phase = "Ovulation"; desc = "Peak energy and confidence window."; }
+        else if (day < pred.cycleLen - 5) { phase = "Luteal"; desc = "Slow down. Focus on grounding routines."; }
+        else { phase = "Pre-menstrual"; desc = "Mood-care window — be gentle with yourself."; }
+        document.getElementById("phaseName").textContent = phase;
+        document.getElementById("phaseDesc").textContent = desc;
+      }
+
+      // Averages
+      const last7 = entries.slice(0,7);
+      const avgSleep = last7.length ? (last7.reduce((s,e)=>s+(+e.sleep||0),0)/last7.length).toFixed(1) : 0;
+      const avgMood  = last7.length ? (last7.reduce((s,e)=>s+(+e.mood||0),0)/last7.length).toFixed(1) : 0;
+      const sl = document.getElementById("avgSleep"); sl.dataset.count = avgSleep; animateCounter(sl, +avgSleep);
+      const mo = document.getElementById("avgMood"); mo.dataset.count = avgMood; animateCounter(mo, +avgMood);
+
+      // Patterns
+      const pl = document.getElementById("patternList");
+      pl.innerHTML = a.patterns.length
+        ? a.patterns.slice(0,3).map(p => `<div style="display:flex;gap:.6rem;align-items:flex-start;padding:.45rem 0;border-bottom:1px dashed var(--border);"><span style="font-size:1.1rem;">${p.icon}</span><span style="font-size:.88rem;color:var(--text-soft);">${p.text}</span></div>`).join("")
+        : '<p class="muted">No patterns detected yet.</p>';
+
+      // Charts
+      const labels = chartLabels(entries, 14);
+      lineChart("moodChart", labels, chartSeries(entries, "mood", 14), "Mood", "#ff6fae");
+      lineChart("sleepChart", labels, chartSeries(entries, "sleep", 14), "Sleep (h)", "#9b6bea");
+      barChart("symptomChart", labels, entries.slice(0,14).reverse().map(e => (Number(e.acne)||0)+(Number(e.bloating)||0)+(Number(e.cramps)||0)+(Number(e.hairfall)||0)), "Symptom load");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>History · Hormona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="tracker.html">Track</a>
+        <a href="insights.html">Insights</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="history.html">History</a>
+        <button class="btn btn-ghost btn-sm" id="themeToggle">🌗</button>
+      </nav>
+      <button class="nav-toggle">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="greeting reveal">
+      <div>
+        <span class="eyebrow">Timeline</span>
+        <h2 style="margin-top:.5rem;">Your tracking history</h2>
+        <p class="muted">Every log, all in one place — fully private.</p>
+      </div>
+      <div class="row">
+        <input id="search" placeholder="🔍 Search entries…" style="padding:.7rem 1rem;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:inherit;" />
+      </div>
+    </div>
+
+    <div class="glass reveal">
+      <div id="timeline"></div>
+    </div>
+  </main>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/insights.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.getElementById("timeline");
+      renderTimeline(root);
+      document.getElementById("search").addEventListener("input", e => renderTimeline(root, e.target.value));
+    });
+  </script>
+</body>
+</html>

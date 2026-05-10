@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hormona — Early Hormonal Disorder Detection</title>
+  <meta name="description" content="AI-powered hormonal health monitoring. Detect early signs of PCOS, hypothyroidism, PMDD and insulin resistance — privately, on-device." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="tracker.html">Track</a>
+        <a href="insights.html">Insights</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="history.html">History</a>
+        <button class="btn btn-ghost btn-sm" id="themeToggle" title="Toggle theme">🌗</button>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">✨ Hormonal intelligence, on-device</span>
+          <h1>Understand your hormones <span class="grad">before they become a problem.</span></h1>
+          <p class="lead">Hormona uses pattern-aware analysis of your daily signals — cycle, mood, sleep and lifestyle — to surface early indicators of PCOS, hypothyroidism, PMDD and insulin resistance.</p>
+          <div class="hero-cta">
+            <a href="dashboard.html" class="btn btn-primary">Open Dashboard →</a>
+            <a href="tracker.html" class="btn btn-ghost">Log today</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><div class="num"><span data-count="14">0</span>d</div><div class="lbl">Average pattern detection</div></div>
+            <div class="stat"><div class="num"><span data-count="4">0</span></div><div class="lbl">Conditions monitored</div></div>
+            <div class="stat"><div class="num">100%</div><div class="lbl">Private &amp; offline</div></div>
+          </div>
+        </div>
+
+        <div class="preview reveal">
+          <div class="ring-row">
+            <div class="ring" style="--p:78"><span class="v">78</span></div>
+            <div style="flex:1;">
+              <div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;">Hormonal balance</div>
+              <h3 style="font-family:var(--font-display);font-size:1.6rem;margin:.2rem 0;color:var(--purple-700);">Looking balanced</h3>
+              <span class="badge low">LOW RISK</span>
+            </div>
+          </div>
+          <div class="row" style="gap:.8rem;margin-bottom:1rem;">
+            <div class="mini"><div class="k">Sleep</div><div class="v">7.4h</div></div>
+            <div class="mini"><div class="k">Mood</div><div class="v">8/10</div></div>
+            <div class="mini"><div class="k">Streak</div><div class="v">14d</div></div>
+          </div>
+          <div class="mini">
+            <div class="k">Weekly trend</div>
+            <div class="bars">
+              <span style="height:40%"></span><span style="height:60%"></span><span style="height:50%"></span>
+              <span style="height:80%"></span><span style="height:65%"></span><span style="height:90%"></span>
+              <span style="height:75%"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Features</span>
+        <h2>Built for early signals, not late diagnoses</h2>
+        <p>Every interaction is designed around clarity, calmness and clinical-grade structure.</p>
+      </div>
+      <div class="features">
+        <div class="feature reveal"><div class="ico">🌸</div><h3>Cycle intelligence</h3><p>Auto-predicted period, fertility window and PMS phase based on your logs.</p></div>
+        <div class="feature reveal"><div class="ico">🧠</div><h3>Pattern-aware AI</h3><p>Weighted rule-based engine surfaces recurring signals across 14-day windows.</p></div>
+        <div class="feature reveal"><div class="ico">📊</div><h3>Beautiful analytics</h3><p>Mood, sleep, weight and symptom trends visualized with smooth charts.</p></div>
+        <div class="feature reveal"><div class="ico">🔒</div><h3>100% private</h3><p>All data lives on-device in your browser. Nothing is uploaded, ever.</p></div>
+        <div class="feature reveal"><div class="ico">📅</div><h3>Smart calendar</h3><p>Color-coded predictions for periods, ovulation, fertile and PMS days.</p></div>
+        <div class="feature reveal"><div class="ico">📄</div><h3>Exportable reports</h3><p>Download polished PDF reports to share with your healthcare provider.</p></div>
+      </div>
+    </section>
+
+    <!-- INSIGHTS PREVIEW -->
+    <section class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">AI Insights</span>
+        <h2>Subtle signals, surfaced clearly</h2>
+      </div>
+      <div class="grid reveal" style="grid-template-columns: 1fr 1fr; gap:1.25rem;">
+        <div class="glass">
+          <div class="card-title"><span class="dot"></span> Pattern detection</div>
+          <p>"Over the last 14 days, recurring acne, irregular cycles and gradual weight increase indicate a moderate hormonal imbalance pattern associated with PCOS."</p>
+          <div class="row" style="gap:.5rem;margin-top:.8rem;">
+            <span class="badge mod">Moderate</span>
+            <span class="muted">Confidence 82%</span>
+          </div>
+        </div>
+        <div class="glass">
+          <div class="card-title"><span class="dot"></span> Behavioral observation</div>
+          <p>"Your energy levels consistently decrease before your cycle. Sleep quality appears to impact your emotional balance."</p>
+          <div class="row" style="gap:.5rem;margin-top:.8rem;">
+            <span class="badge low">Mild</span>
+            <span class="muted">3 patterns detected</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Loved by women</span>
+        <h2>A calmer way to listen to your body</h2>
+      </div>
+      <div class="testi">
+        <blockquote class="reveal">
+          <p>"I finally understood my luteal phase. The mood pattern detection alone was worth it."</p>
+          <div class="who"><div class="avatar">A</div><div><strong>Aanya</strong><br><small>27 · Bangalore</small></div></div>
+        </blockquote>
+        <blockquote class="reveal">
+          <p>"Took my Hormona report to my endocrinologist. She immediately understood my history."</p>
+          <div class="who"><div class="avatar">M</div><div><strong>Maya</strong><br><small>32 · Berlin</small></div></div>
+        </blockquote>
+        <blockquote class="reveal">
+          <p>"The interface feels like a wellness ritual. I actually look forward to logging."</p>
+          <div class="who"><div class="avatar">S</div><div><strong>Sara</strong><br><small>24 · Toronto</small></div></div>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Hormonal Health 101</span>
+        <h2>Know what you're tracking</h2>
+      </div>
+      <div class="edu">
+        <div class="card reveal"><div class="ico">🌺</div><h3>PCOS</h3><p>Polycystic Ovary Syndrome affects 1 in 10 women. Early signs include irregular cycles, acne and weight changes.</p></div>
+        <div class="card reveal"><div class="ico">🦋</div><h3>Hypothyroidism</h3><p>An underactive thyroid causes fatigue, weight gain and slower metabolism — easy to miss for years.</p></div>
+        <div class="card reveal"><div class="ico">🌙</div><h3>PMDD</h3><p>Severe pre-menstrual mood disruption affecting 3–8% of women — distinct from typical PMS.</p></div>
+        <div class="card reveal"><div class="ico">🍯</div><h3>Insulin Resistance</h3><p>Often a precursor to PCOS and Type 2 diabetes. Cravings and post-meal fatigue are early hints.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+          <p style="margin-top:.6rem;max-width:24rem;">A premium, private hormonal health companion. Built with care for the bodies often left unheard.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <p><a href="dashboard.html">Dashboard</a></p>
+          <p><a href="tracker.html">Daily tracker</a></p>
+          <p><a href="insights.html">AI insights</a></p>
+        </div>
+        <div>
+          <h4>Tools</h4>
+          <p><a href="calendar.html">Cycle calendar</a></p>
+          <p><a href="history.html">History</a></p>
+          <p><a href="results.html">Results</a></p>
+        </div>
+        <div>
+          <h4>About</h4>
+          <p>Privacy-first</p>
+          <p>Offline-only</p>
+          <p>v1.0</p>
+        </div>
+      </div>
+      <div class="disclaimer">
+        ⚕️ <strong>Medical disclaimer:</strong> Hormona is not a medical diagnostic tool. Insights are for self-awareness only. Please consult licensed healthcare professionals for diagnosis or treatment.
+      </div>
+      <p class="muted" style="text-align:center;margin-top:1.5rem;">© 2025 Hormona · Made with care</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

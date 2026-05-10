@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calendar · Hormona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><span class="logo">H</span> Hormona</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="tracker.html">Track</a>
+        <a href="insights.html">Insights</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="history.html">History</a>
+        <button class="btn btn-ghost btn-sm" id="themeToggle">🌗</button>
+      </nav>
+      <button class="nav-toggle">☰</button>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="greeting reveal">
+      <div>
+        <span class="eyebrow">Cycle Calendar</span>
+        <h2 style="margin-top:.5rem;">Your menstrual rhythm</h2>
+        <p class="muted">Predictions based on your most recent period log.</p>
+      </div>
+    </div>
+
+    <div class="grid reveal" style="grid-template-columns: 2fr 1fr; gap:1.25rem;">
+      <div class="glass" id="calRoot"></div>
+      <div class="glass">
+        <div class="card-title"><span class="dot"></span> Predictions</div>
+        <div id="predBox"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/calendar.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const entries = loadEntries();
+      renderCalendar(document.getElementById("calRoot"), entries);
+
+      const p = predictCycle(entries);
+      const box = document.getElementById("predBox");
+      if (!p) { box.innerHTML = '<p class="muted">Log a period to enable predictions.</p>'; return; }
+      const fmt = d => new Date(d).toLocaleDateString(undefined, { weekday:"short", month:"short", day:"numeric" });
+      box.innerHTML = `
+        <div style="padding:.7rem 0;border-bottom:1px dashed var(--border);"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;">Last period</div><strong>${fmt(p.lastStart)}</strong></div>
+        <div style="padding:.7rem 0;border-bottom:1px dashed var(--border);"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;">Next period</div><strong style="color:var(--purple-700);">${fmt(p.next)}</strong></div>
+        <div style="padding:.7rem 0;border-bottom:1px dashed var(--border);"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;">Ovulation</div><strong>${fmt(p.ovulation)}</strong></div>
+        <div style="padding:.7rem 0;border-bottom:1px dashed var(--border);"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;">Fertile window</div><strong>${fmt(p.fertileStart)} – ${fmt(p.fertileEnd)}</strong></div>
+        <div style="padding:.7rem 0;"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;">PMS phase begins</div><strong>${fmt(p.pmsStart)}</strong></div>
+      `;
+    });
+  </script>
+</body>
+</html>
